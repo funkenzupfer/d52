@@ -667,14 +667,18 @@ void pass2(void)
 					switch (k)
 					{
 						case 0xed:
-							k = pgmmem[i + 1];		// get 2nd byte
+						{
+							// DONT override the original opcode! It's used later for opcode length calculation!
+							//k = pgmmem[i + 1];		// get 2nd byte
 
-							if (edcode[k])
+							byte k2 = pgmmem[i + 1];		// get 2nd byte;
+
+							if (edcode[k2])
 							{
-								c = (k < 0xa0) ? k - 0x40 : k - 0x64;
+								c = (k2 < 0xa0) ? k2 - 0x40 : k2 - 0x64;
 								doopcode(edtbl[(byte) c].mnem);
 
-								switch (edcode[k])
+								switch (edcode[k2])
 								{
 									case OPT_ED_2:
 										break;
@@ -841,10 +845,11 @@ void pass2(void)
 							}
 							else
 							{
-								invalided(k);
+								invalided(k2);
 								j |= 0x80;
 							}
 							break;
+						}		//case 0xed:
 
 						case 0xdd:
 							j |= doindex(i, 'x');

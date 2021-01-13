@@ -1,4 +1,12 @@
 
+2021-01-13
+forked from jblang/d52
+Fixed great bug in dz80pass2.c:
+  1st opcode byte was overwritten with 2nd byte,
+  this is used for opcode length calculation.
+
+------------------------------------------------------------------------
+
 D52 8052 Disassembler (includes D48 and DZ80)
 =============================================
 
